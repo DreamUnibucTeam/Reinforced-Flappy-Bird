@@ -14,6 +14,7 @@ source /venv/bin/activate # for unix
 ```bash
 pip install flappy-bird-env
 pip install tensorflow opencv-python
+pip install matplotlib
 ```
 
 4. If created the `venv`, add the contents of `modified_env` folder into the `venv/Lib/site-packages`
@@ -30,5 +31,5 @@ python q_learning.py # for the q_learning algorithm
 4. Add less randomization to new generated pipes (add start_y = [20, 30, 40, …, 90] and select a random one of them)
 5. Modify the PIPE_HEIGHT in SimpleEnv and in RGBEnv
 6. Maybe remove the score mark (in FlappyBirdEnvRGB.render, make show_score=False)
-7. Retrieve velocity from env
+7. Retrieve velocity from env (add with_velocity: bool = True to simple env's get observation and reset and step)
 
