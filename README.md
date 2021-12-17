@@ -8,7 +8,7 @@ python -m venv venv
 2. Activate the `venv` in terminal:
 ```bash
 source /venv/Scripts/activate # for windows
-source /venv/bin/activate # for unix
+source ./venv/bin/activate # for unix
 ```
 3. If created the `venv`, run:
 ```bash
