@@ -9,7 +9,7 @@ def load_stats(path):
 
     max_score = 0
     stats["max_scores"] = []
-    for score in stats["max_scores"]:
+    for score in stats["scores"]:
         max_score = max(score, max_score)
         stats["max_scores"].append(max_score)
 
@@ -24,7 +24,7 @@ def plot_stats(stats, log_y_axis=False):
         ax.set_yscale("log")
     plt.scatter(stats["episodes"], stats["scores"], label="score")
     plt.plot(stats["episodes"], stats["max_scores"], label="max_score")
-    plt.plot(stats["episodes"], np.convolve(stats["scores"], np.ones((50,)) / 50, mode="same", label="mean_score"))
+    plt.plot(stats["episodes"], np.convolve(stats["scores"], np.ones((50,)) / 50, mode="same"), label="mean_score")
 
     ax.tick_params(axis="x", labelsize=12)
     ax.tick_params(axis="y", labelsize=12)
@@ -34,5 +34,5 @@ def plot_stats(stats, log_y_axis=False):
 
 
 if __name__ == "__main__":
-    stats = load_stats("saved/q_learning/training_data/training_data_episode_77000.json")
+    stats = load_stats("saved/q_learning/training_data/training_data_episode_40000.json")
     plot_stats(stats)
