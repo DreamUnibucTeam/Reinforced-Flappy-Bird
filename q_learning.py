@@ -1,5 +1,6 @@
-import time
 import os
+import sys
+import time
 import json
 import numpy as np
 from random import uniform
@@ -23,8 +24,6 @@ class QLearning:
         return obs[0] // 10, (obs[1] + Y_OFFSET) // 10, obs[2] + VEL_OFFSET
 
     def update_q_table(self, obs, new_obs, action, reward):
-        # obs_x, obs_y = min(obs[0], 280) // BLOCK, (obs[1] + OFFSET) // BLOCK
-        # new_obs_x, new_obs_y = min(new_obs[0], 280) // BLOCK, (new_obs[1] + OFFSET) // BLOCK
         obs_x, obs_y, obs_vel = self.compute_state(obs)
         new_obs_x, new_obs_y, new_obs_vel = self.compute_state(new_obs)
         # print(self.compute_state(obs), self.compute_state(new_obs))
@@ -81,7 +80,6 @@ class QLearning:
 
                 score = info["score"]
 
-
                 self.update_q_table(obs.astype(int), new_obs.astype(int), action, reward)
                 obs = new_obs
                 rewards_current_episode += reward
@@ -105,6 +103,7 @@ class QLearning:
             if episode % 1000 == 0:
                 print(
                     f"Episode {episode}: Average: {np.mean(np.array(self.scores_all_episodes)[episode - 1000:episode])}, Score {np.max(np.array(self.scores_all_episodes)[episode - 1000:episode])}")
+            if episode % 10000 == 0:
                 self.save_training_data(f"training_data_episode_{episode}.json")
 
     def play(self, num_episodes=5):
@@ -122,13 +121,26 @@ class QLearning:
                 env.render()
                 time.sleep(1 / FPS)
 
+                obs = new_obs
+
                 if done:
                     print(f"Episode {episode} - Score: {score}")
                     break
 
 
 if __name__ == "__main__":
+    mode = "test"
+    if len(sys.argv) == 3:
+        if not sys.argv[2] in ["train", "test"]:
+            raise Exception("Bad mode specified (should be test or train)")
+        mode = sys.argv[2]
+
     env = flappy_bird_gym.make("FlappyBird-v0", normalize_obs=False)
     q_learning_bot = QLearning(env)
-    q_learning_bot.learn()
+
+    if mode == "train":
+        q_learning_bot.learn()
+    elif mode == "test":
+        q_learning_bot.load_q_table("saved/q_learning/result_good.npy")
+        q_learning_bot.play()
 
