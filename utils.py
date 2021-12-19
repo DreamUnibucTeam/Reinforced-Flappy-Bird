@@ -34,5 +34,5 @@ def plot_stats(stats, log_y_axis=False):
 
 
 if __name__ == "__main__":
-    stats = load_stats("saved/q_learning/training_data/training_data_episode_40000.json")
+    stats = load_stats("saved/dqn/result_525000.json")
     plot_stats(stats)
