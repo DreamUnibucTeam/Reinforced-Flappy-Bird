@@ -130,10 +130,10 @@ class QLearning:
 
 if __name__ == "__main__":
     mode = "test"
-    if len(sys.argv) == 3:
-        if not sys.argv[2] in ["train", "test"]:
+    if len(sys.argv) == 2:
+        if not sys.argv[1] in ["train", "test"]:
             raise Exception("Bad mode specified (should be test or train)")
-        mode = sys.argv[2]
+        mode = sys.argv[1]
 
     env = flappy_bird_gym.make("FlappyBird-v0", normalize_obs=False)
     q_learning_bot = QLearning(env)
