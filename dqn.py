@@ -118,7 +118,7 @@ class DQN_Trainer:
             # Get the Q-Value for the current state
             q_values = self.model(state)[0]
 
-            # Exploration - Exlpoitation
+            # Exploration - Exploitation
             random_action = random.random() <= epsilon
             action = random.randint(0, 1) if random_action else torch.argmax(q_values).item()
 
